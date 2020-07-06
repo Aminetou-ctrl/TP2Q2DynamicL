@@ -1,20 +1,18 @@
 package com.example.tp2q2dynamicl;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout myLinearLayout;
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initViews(){
        this.myLinearLayout=(LinearLayout) findViewById(R.id.myLinearLayout);
-       myLinearLayout.setBackgroundColor(Color.GRAY);
+       myLinearLayout.setBackgroundColor(Color.DKGRAY);
        edText=new EditText(this);
         myLinearLayout.addView(edText);
         okBtn=new Button(this);
@@ -45,11 +43,10 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             TextView textview=new TextView(MainActivity.this);
             textview.setText("Bienvenue "+edText.getText());
-            textview.setTextColor(Color.GREEN);
+            textview.setTextColor(Color.WHITE);
             textview.setTextSize(25);
             ll.addView(textview);
-        }
-    });
+        }});
         scrlv.addView(ll);
         myLinearLayout.addView(scrlv);
     }
@@ -60,9 +57,22 @@ public class MainActivity extends AppCompatActivity {
         if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
             Toast.makeText(getApplicationContext(),"Mode portrait",Toast.LENGTH_SHORT).show();
         } else if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
-            //setContentView(R.layout.activity_main2);
             Toast.makeText(getApplicationContext(),"Mode paysage",Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("editText",edText.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        edText.setText(savedInstanceState.getString("editText"));
+
     }
 }
